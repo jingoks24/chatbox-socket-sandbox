@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +39,6 @@
             background-color: #F1F1F5;
             margin: 10px 1px 0 1px;
             border-radius: 5px;
-            width: 100%;
-            overflow-y: scroll;
         }
         #m {
             height: 100%;
@@ -63,7 +60,7 @@
             </div>
             <div class="col-sm-8 col-md-9 col-lg-10 chat-box">
                 <div class="row" id = "message">
-                        <table id = "messages" class="table table-striped p-4"></table>
+                        <ul id = "messages" class=" p-4"></ul>
                 </div>
                 <form action="" class="row">
                     <input id="m" autocomplete="off" class="col-9"/>
@@ -83,22 +80,14 @@
         $(function(){
             let socket = io();
             $('form').submit(function(){
-                console.log(socket);
                 socket.emit('chat message', $('#m').val());
                 $('#m').val('');
                 return false;
             });
             socket.on('chat message', function(msg){
-                let tableData = "<td class='text-right'>"+msg+"</td>"
-                $('#messages').append($('<tr class="text-right">')).append(tableData);
-                scroll();
+                $('#messages').append($('<li>').text(msg));
             });
         });
-
-        function scroll(){
-            let message = document.getElementById('message');
-            message.scrollTop = message.scrollHeight;
-        }
     </script>
 </body>
 </html>
